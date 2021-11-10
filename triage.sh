@@ -1,13 +1,14 @@
 #!/bin/bash
-sudo echo "[*] Ensure you've installed lsof through apt or pacman."
-sudo echo "[*] Beginning live triage on Linux filesystem."
-sudo mkdir log
 
+hostname=uname -n
+
+sudo echo "[*] Beginning live triage on $hostname..."
+sudo mkdir logs/$hostname
 sudo echo "[*] Gathering system information..."
-log='./log/sys-info.log'
-sudo echo -e "\n[+] System Info ---------------------------------------------------" >> $log
+log="./logs/$hostname/sys-info.log"
+sudo echo "[+] System Info ---------------------------------------------------" >> $log
 sudo uname -a >> $log
-sudo echo "\n[+] Date/Time:" >> $log
+sudo echo -e "\n[+] Date/Time:" >> $log
 sudo timedatectl >> $log
 sudo echo -e "\n[+] Uptime:" >> $log
 sudo uptime >> $log
@@ -15,8 +16,8 @@ sudo mount >> $log
 sudo echo $PATH >> $log
 
 sudo echo "[*] Gathering information on users..." 
-log='./log/user-info.log'
-sudo echo -e "\n[+] Users Info ---------------------------------------------------" >> $log
+log="./logs/$hostname/user-info.log"
+sudo echo "[+] Users Info ---------------------------------------------------" >> $log
 sudo echo -e "\n[+] Logged in currently:" >> $log
 sudo w >> $log
 sudo echo -e "\n[+] Which users have logged in remotely?" >> $log
@@ -41,8 +42,8 @@ sudo echo -e "\n[+] Root user .bash_history:" >> $log
 sudo cat /root/.bash_history >> $log
 
 sudo echo "[*] Gathering network information..."
-log='./log/net-info.log'
-sudo echo -e "\n[+] Network Info ---------------------------------------------------" >> $log
+log="./logs/$hostname/net-info.log"
+sudo echo "[+] Network Info ---------------------------------------------------" >> $log
 sudo echo -e "\n[+] Interfaces:" >> $log
 sudo ifconfig >> $log
 sudo echo -e "\n[+] Connections:" >> $log
@@ -56,11 +57,11 @@ sudo route >> $log
 sudo echo -e "\n[+] Hosts:" >> $log
 sudo cat /etc/hosts >> $log
 sudo echo -e "\n[+] ARP table:" >> $log
-sudo arp -a >> $log
+sudo apr -a >> $log
 
 sudo echo "[*] Gathering services information..."
-log='./log/service-info.log'
-sudo echo -e "\n[+] Service Info ---------------------------------------------------" >> $log
+log="./logs/$hostname/service-info.log"
+sudo echo "[+] Service Info ---------------------------------------------------" >> $log
 sudo echo -e "\n[+] Running services:" >> $log
 sudo ps -aux >> $log
 sudo echo -e "\n[+] Load modules:" >> $log
@@ -72,6 +73,33 @@ sudo lsof -nPi | cut -f 1 -d " " | uniq | tail -n +2 >> $log
 sudo echo -e "\n[+] Unlinked processes:" >> $log
 sudo lsof +L1 >> $log
 
-sudo echo -e"\[!] Done!"
-sudo echo "[*] That's all for now, this script is still a work in progress."
-exit
+sudo echo "[*] Gathering autorun/autoload information..."
+log="./logs/$hostname/autorun-info.log"
+sudo echo "[+] Autorun/Autoload Info ---------------------------------------------------" >> $log
+sudo echo -e "\n[+] Cron jobs:" >> $log
+sudo crontab -l >> $log
+sudo echo -e "\n[+] Root/UID0 Cron jobs:" >> $log
+sudo crontab -u root -l >> $log
+sudo echo -e "\n[+] Review for unusual cron jobs:" >> $log
+sudo ls /etc/cron.* >> $log
+sudo cat /etc/crontab >> $log
+
+sudo echo "[*] Gathering file, drive, and share information..."
+log="./logs/$hostname/file-info.log"
+sudo echo "[+] File, Drives, and Share Info ---------------------------------------------------" >> $log
+sudo echo -e "\n[+] Disk Space:" >> $log
+sudo df -ah >> $log
+sudo echo -e "\n[+] Directory listing for root:" >> $log
+sudo ls -splah >> $log
+sudo echo -e "\n[+] Directory listing for /etc/init.d:" >> $log
+sudo ls -splah /etc/init.d >> $log
+sudo echo -e "\n[+] Files over 100MB:" >> $log
+sudo find / -size +100000k -maxdepth 30 -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
+sudo echo -e "\n[+] Full filesystem and attributes:" >> $log
+sudo find / -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
+
+sudo echo "[+] Attempting to run chkrootkit..."
+sudo chkrootkit >> $log
+
+sudo echo "[!] Done!"
+done
