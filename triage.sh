@@ -56,7 +56,7 @@ sudo route >> $log
 sudo echo -e "\n[+] Hosts:" >> $log
 sudo cat /etc/hosts >> $log
 sudo echo -e "\n[+] ARP table:" >> $log
-sudo apr -a >> $log
+sudo arp -a >> $log
 
 sudo echo "[*] Gathering services information..."
 log="./logs/$hostname/service-info.log"
@@ -93,7 +93,7 @@ sudo ls -splah >> $log
 sudo echo -e "\n[+] Directory listing for /etc/init.d:" >> $log
 sudo ls -splah /etc/init.d >> $log
 sudo echo -e "\n[+] Files over 100MB:" >> $log
-sudo find / -size +100000k -maxdepth 30 -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
+sudo find /* -maxdepth 10 -size +100000k -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
 sudo echo -e "\n[+] Full filesystem and attributes:" >> $log
 sudo find / -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
 
@@ -102,4 +102,5 @@ log="./logs/$hostname/chkrootkit.log"
 sudo chkrootkit >> $log
 
 sudo echo "[!] Done!"
+sudo echo "[*] Your logs can be found in ./logs/$hostname/*"
 done
