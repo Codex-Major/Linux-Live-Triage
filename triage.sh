@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hostname= uname -n
+hostname= 'uname -n'
 sudo echo "[*] Beginning live triage on $hostname..."
 sudo mkdir logs/$hostname
 sudo echo "[*] Gathering system information..."
@@ -103,4 +103,4 @@ sudo chkrootkit >> $log
 
 sudo echo "[!] Done!"
 sudo echo "[*] Your logs can be found in ./logs/$hostname/*"
-done
+exit
