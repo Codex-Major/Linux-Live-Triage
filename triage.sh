@@ -56,7 +56,7 @@ sudo route >> $log
 sudo echo -e "\n[+] Hosts:" >> $log
 sudo cat /etc/hosts >> $log
 sudo echo -e "\n[+] ARP table:" >> $log
-sudo apr -a >> $log
+sudo arp -a >> $log
 
 sudo echo "[*] Gathering services information..."
 log='./log/service-info.log'
