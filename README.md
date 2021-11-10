@@ -5,6 +5,8 @@ Performs triage/autopsy on a compromised system and logs all the information in 
 
 !!! Still a Work in progress.
 
+If you like this script consider starring this repo.
+
 # Requirements:
   Be sure to install the `lsof` command through an available package manager. (apt, pacman, yay)
 # Usage:
