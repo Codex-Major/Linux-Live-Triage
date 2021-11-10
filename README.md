@@ -10,4 +10,4 @@ Performs triage/autopsy on a compromised system and logs all the information in 
 # Usage:
   `git clone https://github.com/Codex-Major/Linux-Live-Triage`
   
-  `cd Linux-Live-Triage; sudo chmod +x triage.sh; sudo ./traige.sh`
+  `cd Linux-Live-Triage; sudo chmod +x ./triage.sh; sudo ./traige.sh`
