@@ -12,4 +12,4 @@ If you like this script consider starring this repo.
 # Usage:
   `git clone https://github.com/Codex-Major/Linux-Live-Triage`
   
-  `cd Linux-Live-Triage; sudo chmod +x ./triage.sh; sudo ./traige.sh`
+  `cd Linux-Live-Triage; sudo chmod +x ./triage.sh; sudo ./triage.sh`
