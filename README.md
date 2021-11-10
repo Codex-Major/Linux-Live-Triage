@@ -8,7 +8,7 @@ Performs triage/autopsy on a compromised system and logs all the information in 
 If you like this script consider starring this repo.
 
 # Requirements:
-  Be sure to install the `lsof` command through an available package manager. (apt, pacman, yay)
+  Be sure to install the `lsof` and `chkrootkit` commands through an available package manager. (apt, pacman, yay .. etc)
 # Usage:
   `git clone https://github.com/Codex-Major/Linux-Live-Triage`
   
