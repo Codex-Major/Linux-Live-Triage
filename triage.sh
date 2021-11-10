@@ -1,7 +1,6 @@
 #!/bin/bash
 
 hostname=uname -n
-
 sudo echo "[*] Beginning live triage on $hostname..."
 sudo mkdir logs/$hostname
 sudo echo "[*] Gathering system information..."
@@ -99,6 +98,7 @@ sudo echo -e "\n[+] Full filesystem and attributes:" >> $log
 sudo find / -printf "%m;%Ax;%AT;%Tx;%TT;%Cx;%CT;%U;%G;%s;%p\n" >> $log
 
 sudo echo "[+] Attempting to run chkrootkit..."
+log="./logs/$hostname/chkrootkit.log"
 sudo chkrootkit >> $log
 
 sudo echo "[!] Done!"
